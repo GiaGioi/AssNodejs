@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-8 offset-2">
+        <form action="/cates" method="GET">
+            <h1 class="form-group">Sửa thông tin</h1>
+            <div class="form-group">
+                <label for="">Tên sản phẩm</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label for="">Danh mục</label>
+                <select name="cate_id" class="form-control">
+                    <option value="">Điện tử-Điện lạnh</option>
+                    <option value="">Máy Ảnh</option>
+                    <option value="">Laptop</option>
+                    <option value="">Điện thoại</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="">Giá</label>
+                <input type="number" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label for="">Mo ta</label><br>
+                <textarea class="form-control" id="validationTextarea" placeholder="Them mo ta"
+                    class="form-control"></textarea>
+            </div>
+            <a href="/" class="btn btn-success">Sửa</a>
+            <a href="/" class="btn btn-danger">Hủy</a>
+        </form>
+    </div>
+</div>
