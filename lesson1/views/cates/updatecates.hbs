@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-8 offset-2">
         <form action="/cates/save-edit" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{cate._id}}"><input type="hidden" name="id" value="{{cate._id}}">
-        <h1 class="form-group">Sửa danh mục</h1>
+            <input type="hidden" name="id" value="{{cate._id}}">
+            <h1 class="form-group">Sửa danh mục</h1>
             <div class="form-group">
                 <label for="">Tên danh mục</label>
                 <input type="text" class="form-control" name="name" value="{{cate.name}}">
@@ -11,18 +11,19 @@
                 <label for="">Ảnh danh mục</label>
                 <input type="text" class="form-control" name="image" >
             </div> --}}
-             <div class="form-group">
-                 <img src="{{cate.image}}" width="100">
-                 <br>
-                 <label for="">Ảnh danh mục</label>
-                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
-             </div>
             <div class="form-group">
-                <label for="">Mô tả danh mục</label><br> 
-                <textarea class="form-control" name="description" id="validationTextarea" placeholder="Thêm mô tả" class="form-control">{{cate.description}}</textarea>
+                <img src="{{cate.image}}" width="100">
+                <br>
+                <label for="">Ảnh danh mục</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="">Mô tả danh mục</label><br>
+                <textarea class="form-control" name="description" id="validationTextarea" placeholder="Thêm mô tả"
+                    class="form-control">{{cate.description}}</textarea>
             </div>
             <button type="submit" class="btn btn-success">Lưu lại</button>
-             <a href="/" class="btn btn-danger">Hủy</a>
+            <a href="/" class="btn btn-danger">Hủy</a>
         </form>
     </div>
 </div>

@@ -1,0 +1,20 @@
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+    </thead>
+    <tbody>
+        {{#each categories}}
+            <tr>
+                <td>{{this._id}}</td>
+                <td>{{this.name}}</td>
+                <td>
+                    <img src="{{this.image}}" width="100">
+                </td>
+                <td>{{this.description}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
