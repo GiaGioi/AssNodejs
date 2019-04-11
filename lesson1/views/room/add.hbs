@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-8 offset-2">
+        <form action="/room/save-add" method="post" enctype="multipart/form-data">
+            <h1 class="form-group">Thêm phòng</h1>
+            <div class="form-group">
+                <label for="">Phòng số</label>
+                <input type="text" class="form-control" name="room_number">
+            </div>
+            <div class="form-group">
+                <label for="">Tầng số</label>
+                <input type="text" class="form-control" name="floor">
+            </div>
+            <div class="form-group">
+                <label for="">Khách sạn</label>
+                <select class="form-control" name="hotelid" value="{{room.hotelid}}">
+                    {{#each cates}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Hình ảnh</label>
+                <input type="file" name="image" width="150" class="form-control-file">
+            </div>
+            {{!-- <div class="form-group">
+                <label for="">Phòng đơn</label>
+                <input type="text" class="form-control" name="single_room">
+            </div> --}}
+            <div class="form-check">
+                <label>Phòng đơn</label>
+                <br>
+                <label class="form-check-label"><input type="radio" value="true" name="single_room" checked="checked">True</label>
+                <label class="form-check-label" ><input type="radio" value="false" name="single_room">False</label>
+            </div>
+            <div class="form-group">
+                <label for="">Status</label>
+                <br>
+                <input type="radio" name="status" checked value="1"> Đang trống
+                <input type="radio" name="status" checked value="2"> Đang dùng
+                <input type="radio" name="status" checked value="3"> Không sử dụng
+            </div>
+            <div class="form-group">
+                <label for="">Giá</label>
+                <input type="number" class="form-control" name="price">
+            </div>
+            {{!-- <div class="form-group">
+                <label for="">Trạng thái</label>
+                <input type="number" class="form-control" name="status">
+            </div> --}}
+            <div class="form-group">
+                <label for="">Chi tiết</label><br>
+                <textarea class="form-control" name="detail" placeholder="Thêm mô tả"
+                    class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Thêm vào</button>
+            <a href="/" class="btn btn-danger">Hủy</a>
+        </form>
+    </div>
+</div>

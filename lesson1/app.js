@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var mongoose = require('mongoose');
-let dev_db_url = 'mongodb://localhost:27017/pt13354';
+let dev_db_url = 'mongodb://localhost:27017/assignment';
 
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB,{useNewUrlParser:true,useCreateIndex:true});

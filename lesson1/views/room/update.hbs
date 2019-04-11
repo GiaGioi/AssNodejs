@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-8 offset-2">
+        <form action="/room/save-edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{{room._id}}">
+            <h1 class="form-group">Sửa thông tin</h1>
+            <div class="form-group">
+                <label for="">Phòng số</label>
+                <input type="text" class="form-control" name="room_number" value="{{room.room_number}}">
+            </div>
+            <div class="form-group">
+                <label for="">Tầng số</label>
+                <input type="text" class="form-control" name="floor" value="{{room.floor}}">
+            </div>
+            <div class="form-group">
+                <label for="">Khách sạn</label>
+                <select class="form-control" name="hotelid" value="{{room.hotelid}}">
+                    {{#each cates}}
+                    <option value="{{this._id}}" {{#if this.selected}} selected {{/if}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <img src="{{room.image}}" width="150">
+                <label for="">Hình ảnh</label>
+                <input type="file" name="image" width="150" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            {{!-- <div class="form-group">
+                <label for="">Phòng đơn</label>
+                <input type="text" class="form-control" name="single_room">
+            </div> --}}
+            <div class="form-group">
+                <label for="">Phòng đơn: </label>
+                <br>
+                {{#if room.single_room}}
+                <input required="true" autofocus="true" type="radio" name="single_room" checked value="true"> True
+                {{else}}
+                <input required="true" autofocus="true" type="radio" name="single_room" value="true"> True
+                {{/if}}
+
+                {{#if room.single_room}}
+                <input required="true" autofocus="true" type="radio" name="single_room" value="false"> False <br>
+                {{else}}
+                <input required="true" autofocus="true" type="radio" name="single_room" checked value="false"> False
+                <br>
+                {{/if}}
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <br>
+                <input type="radio" id="rd0" name="status" checked value="1"> Đang trống
+                <input type="radio" id="rd1" name="status" checked value="2"> Đang dùng
+                <input type="radio" id="rd2" name="status" checked value="3"> Không sử dụng
+            </div>
+            <div class="form-group">
+                <label for="">Giá</label>
+                <input type="number" class="form-control" name="price" value="{{room.price}}">
+            </div>
+            {{!-- <div class="form-group">
+                <label for="">Trạng thái</label>
+                <input type="number" class="form-control" name="status">
+            </div> --}}
+            <div class="form-group">
+                <label for="">Chi tiết</label><br>
+                <textarea class="form-control" name="detail" id="validationTextarea" placeholder="Thêm mô tả"
+                    class="form-control">{{room.detail}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Lưu lại</button>
+            <a href="/" class="btn btn-danger">Hủy</a>
+        </form>
+    </div>
+</div>
+<script>
+    var btn1 = document.getElementById("rd0");
+    var btn2 = document.getElementById("rd1");
+    var btn3 = document.getElementById("rd2");
+    if ({{ room.status }} == 1) {
+        btn1.checked = true;
+    }
+            else if ({{ room.status }} == 2) {
+        btn2.checked = true;
+    }
+            else {
+        btn3.checked = true;
+    }
+</script>

@@ -2,15 +2,11 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var shortid = require('shortid');
-// var upload = multer({ storage: storage});
-
-var Category = require('../models/category');
-var Product = require('../models/product');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // cau hinh noi luu tru file upload
-    cb(null, './public/uploads');
+    cb(null, './public/images');
   },
   filename: function (req, file, cb) {
     // cau hinh ten file upload
@@ -18,41 +14,133 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage });
+
+var Hotel = require('../models/hotel');
+var Room = require('../models/room');
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  Category.find({}, function (err, data) {
-    res.render('cates/index', { cates: data });
+  Hotel.find({}, function (err, data) {
+    res.render('hotel/index', { cates: data });
   });
 });
-router.get('/cates/addcates', function (req, res, next) {
-  res.render('cates/addcates');
+router.get('/hotel/addhotel', function (req, res, next) {
+  res.render('hotel/addhotel');
 });
-//add cates
-router.post('/cates/save-add', upload.single('image'), function (req, res, next) {
-  var model = new Category();
+router.post('/hotel/save-add', upload.single('image'), function (req, res, next) {
+  var model = new Hotel();
   model.name = req.body.name;
-  // model.image = req.body.image;
-  // lay anh = duong dan cua file vua upload len - loai bo tu public
   model.image = req.file.path.replace('public', '');
-  model.description = req.body.description;
+  model.city = req.body.city;
+  model.address = req.body.address;
+  model.owner = req.body.owner;
+  model.license_number = req.body.license_number;
+  model.total_floor = req.body.total_floor;
   model.save(function (err) {
     res.redirect('/');
   });
 });
 // update cates
-router.get('/cates/updatecates/:cId', function (req, res, next) {
-  Category.findOne({_id: req.param.cId}, (err, data) => {
-    res.render('cates/updatecates', {cate: data});
+router.get('/hotel/updatehotel/:id', function (req, res, next) {
+  Hotel.findOne({ _id: req.params.id }, (err, data) => {
+    res.render('hotel/updatehotel', { cates: data });
   })
 });
-router.post('/cates/save-edit', upload.single('image'), function (req, res, next) {
+router.post('/hotel/save-edit', upload.single('image'), function (req, res, next) {
+  let { id, name, city, address, owner, license_number, total_floor } = req.body;
+  Hotel.findOne({ _id: id }, function (err, model) {
+    if (err) {
+      res.send('Id khong ton tai');
+    }
+    model.name = name;
+    model.city = city;
+    model.address = address;
+    model.owner = owner;
+    model.license_number = license_number;
+    model.total_floor = total_floor;
+    if (req.file != null) {
+      model.image = req.file.path.replace('public', '');
+    }
+    model.save(function (err) {
+      if (err) {
+        res.send('cap nhat khong thanh cong');
+      }
+      res.redirect('/');
+    });
+  });
+
+});
+//delete
+router.get('/hotel/deletehotel/:cId', function (req, res, next) {
+  Hotel.deleteOne({ _id: req.params.cId }, function (err) {
+    if (err) {
+      res.send('Xoa khong thanh cong');
+    }
+    res.redirect('/');
+  });
+});
+
+//add room
+router.get('/room/index', function (req, res, next) {
+  Room.find({}).populate('hotelid').exec(function (err, data) {
+    if (err) {
+      res.send('Da co loi he thong');
+    }
+    res.render('room/index', { room: data });
+  });
+});
+
+router.get('/room/add', function (req, res, next) {
+  Hotel.find({}, function (err, data) {
+    res.render('room/add', { cates: data });
+  })
+
+});
+router.post('/room/save-add', upload.single('image'), function (req, res, next) {
+  var model = new Room();
+  model.room_number = req.body.room_number;
+  model.floor = req.body.floor;
+  model.hotelid = req.body.hotelid;
+  model.single_room = req.body.single_room;
+  model.status = req.body.status;
+  model.image = req.file.path.replace('public', '');
+  model.price = req.body.price;
+  model.detail = req.body.detail;
+  model.save(function (err) {
+    res.redirect('/room/index');
+  });
+});
+router.get('/room/update/:cId', function (req, res, next) {
+  Room.findOne({ _id: req.params.cId }, (err, data) => {
+    if (err) {
+      res.send('id khong ton tai');
+    }
+    Hotel.find({}, function (err, cates) {
+      for (let i = 0; i < cates.length; i++) {
+        if (cates[i].id == data.hotelid.toString()) {
+          cates[i].selected = true;
+          break;
+        }
+      }
+      console.log(cates);
+      res.render('room/update', { room: data, cates: cates });
+    });
+
+  });
+});
+router.post('/room/save-edit', upload.single('image'), function (req, res, next) {
   var cId = req.body.id;
-  Category.findOne({ _id: cId }, function (err, model) {
+  Room.findOne({ _id: cId }, function (err, model) {
     if (err) {
       res.send('id không tồn tại');
     }
-    model.name = req.body.name;
-    model.description = req.body.description;
+    model.room_number = req.body.room_number;
+    model.floor = req.body.floor;
+    model.hotelid = req.body.hotelid;
+    model.single_room = req.body.single_room;
+    model.status = req.body.status;
+    model.price = req.body.price;
+    model.detail = req.body.detail;
     if (req.file != null) {
       model.image = req.file.path.replace('public', '');
     }
@@ -61,54 +149,16 @@ router.post('/cates/save-edit', upload.single('image'), function (req, res, next
       if (err) {
         res.send('Luu khong thanh cong');
       }
-      res.redirect('/');
+      res.redirect('/room/index');
     })
   })
 });
-
-
-
-//delete
-router.get('/cates/deletecates:cId', function (req, res, next) {
-  Category.deleteOne({ _id: req.params.cId }, function (err) {
+router.get('/room/delete/:cId', function (req, res, next) {
+  Room.deleteOne({ _id: req.params.cId }, function (err) {
     if (err) {
       res.send('Xoa khong thanh cong');
     }
-    res.redirect('/');
-  });
-});
-//product
-router.get('/product/add', function (req, res, next) {
-  res.render('product/add');
-});
-router.get('/product/update', function (req, res, next) {
-  res.render('product/update');
-});
-router.get('/product/dialog', function (req, res, next) {
-  res.render('product/dialog');
-});
-router.get('/product/index', function (req, res, next) {
-  Product.find({}, function (err, data) {
-
-    res.render('product/index', { product: data });
-  });
-});
-router.post('/product/save-add', function (req, res, next) {
-  var model = new Product();
-  model.name = req.body.name;
-  // lay anh = duong dan cua file vua upload len - loai bo tu public
-  model.image = req.body.image;
-  model.price = req.body.price;
-  model.description = req.body.description;
-  model.save();
-  res.redirect('/product/index');
-});
-router.get('/product/delete/:cId', function (req, res, next) {
-  Product.deleteOne({ _id: req.params.cId }, function (err) {
-    if (err) {
-      res.send('Xoa khong thanh cong');
-    }
-    res.redirect('/product/index');
+    res.redirect('/room/index');
   });
 });
 

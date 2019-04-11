@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
@@ -14,7 +15,9 @@
     "mongoose": "^5.4.19",
     "morgan": "~1.9.0",
     "multer": "^1.4.1",
-    "shortid": "^2.2.14"
+    "nodemon": "^1.18.10",
+    "shortid": "^2.2.14",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

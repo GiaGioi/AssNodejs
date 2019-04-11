@@ -1,0 +1,62 @@
+<style>
+    .table-hover tbody tr:hover {
+        background: rgba(150, 214, 158, 0.47);
+    }
+</style>
+<div class="row">
+    <div class="col-8 offset-2">
+        <table class="table table-hover">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="btn btn-outline-success" id="home-tab" data-toggle="tab" href="/" role="tab"
+                        aria-controls="home" aria-selected="true">Khách sạn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-success" id="profile-tab" data-toggle="tab" href="/room/index" role="tab"
+                        aria-controls="profile" aria-selected="false">Phòng</a>
+                </li>
+            </ul>
+            <thead>
+                <tr>
+                    <th>Số phòng</th>
+                    <th>Hình ảnh</th>
+                    <th>Số tầng</th>
+                    <th>Tên khách sạn</th>
+                    <th>Phòng đơn</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                    <th>
+                    <td><a href="/room/add" class="btn btn-sm btn-success">Thêm</a></td>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {{#each room}}
+                <tr>
+                    <td>{{this.room_number}}</td>
+                    <td>
+                        <img src="{{this.image}}" width="100" height="80">
+                    </td>
+                    <td>{{this.floor}}</td>
+                    <td>{{this.hotelid.name}}</td>
+                    <td>{{this.single_room}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.status}}</td>
+                    <td>{{this.detail}}</td>
+                    <td>
+                    <td>
+                        <a href="/room/update/{{this._id}}" class="btn btn-sm btn-primary">Sửa</a>
+                    </td>
+                    <td>
+                        <a href="/room/delete/{{this._id}}" class="btn btn-sm btn-danger">Xóa</a></td>
+                    </td>
+                </tr>
+                {{/each}}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
